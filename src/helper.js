@@ -9,6 +9,7 @@ var Helper = {
 	getUserConfigPath: getUserConfigPath,
 	getUserLogsPath: getUserLogsPath,
 	setHome: setHome,
+	escapeRegex: escapeRegex,
 };
 
 module.exports = Helper;
@@ -54,4 +55,8 @@ function expandHome(shortenedPath) {
 	home = home.replace("$", "$$$$");
 
 	return path.resolve(shortenedPath.replace(/^~($|\/|\\)/, home + "$1"));
+}
+
+function escapeRegex(input) {
+	return input.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }

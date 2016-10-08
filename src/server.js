@@ -214,6 +214,12 @@ function init(socket, client) {
 			}
 		);
 		socket.on(
+			"search",
+			function(data) {
+				client.searchMessages(data);
+			}
+		);
+		socket.on(
 			"sort",
 			function(data) {
 				client.sort(data);

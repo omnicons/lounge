@@ -8,6 +8,7 @@ Chan.Type = {
 	LOBBY: "lobby",
 	QUERY: "query",
 	SPECIAL: "special",
+	SEARCH: "search",
 };
 
 var id = 0;
@@ -25,6 +26,16 @@ function Chan(attr) {
 		users: []
 	}, attr));
 }
+
+Chan.prototype.search = function(options) {
+	if (this.type !== Chan.Type.CHANNEL && this.type !== Chan.Type.QUERY) {
+		return [];
+	}
+
+	return this.messages.filter(function(message) {
+		return options.searchRegex.test(message.text);
+	});
+};
 
 Chan.prototype.pushMessage = function(client, msg) {
 	client.emit("msg", {

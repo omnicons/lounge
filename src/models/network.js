@@ -1,5 +1,6 @@
 var _ = require("lodash");
 var Chan = require("./chan");
+var Helper = require("../helper");
 
 module.exports = Network;
 
@@ -41,7 +42,7 @@ Network.prototype.setNick = function(nick) {
 		"(?:^|[^a-z0-9]|\x03[0-9]{1,2})" +
 
 		// Escape nickname, as it may contain regex stuff
-		nick.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&") +
+		Helper.escapeRegex(nick) +
 
 		// Do not match characters and numbers
 		"(?:[^a-z0-9]|$)",
@@ -49,6 +50,16 @@ Network.prototype.setNick = function(nick) {
 		// Case insensitive search
 		"i"
 	);
+};
+
+Network.prototype.search = function(options) {
+	var messages = [];
+
+	this.channels.forEach(function(channel) {
+		messages = messages.concat(channel.search(options));
+	});
+
+	return messages;
 };
 
 Network.prototype.toJSON = function() {

@@ -189,11 +189,19 @@ $(function() {
 				channels: [data.chan]
 			})
 		);
-		chat.append(
-			render("chat", {
-				channels: [data.chan]
-			})
-		);
+
+		if (data.chan.type === "search") {
+			chat.append(
+				render("search", data.chan)
+			);
+		} else {
+			chat.append(
+				render("chat", {
+					channels: [data.chan]
+				})
+			);
+		}
+
 		renderChannel(data.chan);
 
 		// Queries do not automatically focus, unless the user did a whois
@@ -1135,6 +1143,21 @@ $(function() {
 		"escape"
 	], function() {
 		contextMenuContainer.hide();
+	});
+
+	Mousetrap.bind([
+		"ctrl+shift+f"
+	], function() {
+		var pleaseMakeMeGood = prompt("Search for", "").trim();
+
+		if (pleaseMakeMeGood.length > 0) {
+			socket.emit(
+				"search", {
+					query: pleaseMakeMeGood,
+					caseSensitive: false
+				}
+			);
+		}
 	});
 
 	setInterval(function() {
