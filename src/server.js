@@ -75,7 +75,14 @@ module.exports = function() {
 		if (config.public) {
 			auth.call(socket);
 		} else {
-			init(socket);
+//			init(socket);
+			//cozy changes: auto auth user
+			manager.loadUser(config.cozyuser);
+			auth.call(socket, {
+				remember: true,
+				user: config.cozyuser,
+				password: ''
+			});
 		}
 	});
 
