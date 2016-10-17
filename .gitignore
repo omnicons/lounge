@@ -7,5 +7,5 @@ coverage/
 # See https://docs.npmjs.com/misc/scripts
 client/fonts/
 client/js/libs.min.js.map
-client/js/libs.min.js
-client/js/lounge.templates.js
+# client/js/libs.min.js
+# client/js/lounge.templates.js
